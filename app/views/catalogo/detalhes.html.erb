@@ -1,4 +1,4 @@
-<%= form_for :carrinho, url:carrinho_index_path do |form| %>
+<%= form_for :carrinho, url: carrinho_index_path do |form| %>
   <div id="all">
     <div id="content">
       <div class="container">
@@ -6,7 +6,9 @@
           <div class="row" id="productMain">
             <div class="col-sm-6">
               <div id="mainImage">
-                <%= image_tag("template/detailbig1.jpg", class: "img-responsive") %>
+                <% if @produto.image.attached? %>
+                  <%= image_tag @produto.image, class: "img-responsive" %>
+                <% end %>
               </div>
             </div>
             <div class="col-sm-6">
@@ -24,14 +26,14 @@
                 <hr>
                 <div class="container-fluid">
                   <p class="text-large">Acompanhamentos</p><br>
-                  <%= hidden_field_tag  'item[produto_id]', @produto.id %>
+                  <%= hidden_field_tag 'item[produto_id]', @produto.id %>
                   <div class="form-group">
                     <%= collection_check_boxes(:item, :acompanhamento_id, @acompanhamento.all, :id, :nome_acompanhamento) do |b| %>
                       <div class="form-check">
-                        <%= b.label class: "form-check-label", for: b.object.id do%>
-                          <%= b.check_box class: "form-check-input", id: b.object.id%>
-                          <%=b.text %>
-                          (<b> + </b><span id= valor_acompanhamento><%= b.object.valor_acompanhamento %></span>)
+                        <%= b.label class: "form-check-label", for: b.object.id do %>
+                          <%= b.check_box class: "form-check-input", id: b.object.id %>
+                          <%= b.text %>
+                          (<b> + </b><span id=valor_acompanhamento><%= b.object.valor_acompanhamento %></span>)
                         <% end %>
                       </div>
                     <% end %>
@@ -46,7 +48,7 @@
                 <div class="container-fluid">
                   <p class=" buttons">
                   <div class="actions text-center">
-                    <%= form.button :submit, :class=>"btn btn-success" do %>
+                    <%= form.button :submit, :class => "btn btn-success" do %>
                       <i class="fa fa-shopping-cart"></i> Add to cart
                     <% end %>
                   </div>
@@ -60,14 +62,15 @@
             <p>
             <h4>Descrição do Produto</h4>
             <blockquote>
-              <p><em>Define style this season with Armani's new range of trendy tops, crafted with intricate details. Create a chic statement look by teaming this lace number with skinny jeans and pumps.</em>
+              <p><em>Define style this season with Armani's new range of trendy tops, crafted with intricate details.
+                Create a chic statement look by teaming this lace number with skinny jeans and pumps.</em>
               </p>
             </blockquote>
             <h4>Acompanhamentos</h4>
             <ul>
-              <% @acompanhamento.each do |acompanhamento|  %>
+              <% @acompanhamento.each do |acompanhamento| %>
                 <li><%= acompanhamento.nome_acompanhamento %></li>
-              <%end %>
+              <% end %>
             </ul>
             <hr>
           </div>
@@ -83,19 +86,19 @@
     $(function () {
 
         let valorTotal = <%= @produto.valor_produto %>;
-        $("#valorTotal").text("R$: "+valorTotal);
+        $("#valorTotal").text("R$: " + valorTotal);
 
         $('.form-group input[type=checkbox]').click(function () {
-            let valor_acompanhamento = parseFloat($("#valor_acompanhamento").text()) ;
+            let valor_acompanhamento = parseFloat($("#valor_acompanhamento").text());
 
             if ($(this).is(':checked')) {
 
                 valorTotal = valorTotal + valor_acompanhamento;
-                $("#valorTotal").text("R$: "+valorTotal);
+                $("#valorTotal").text("R$: " + valorTotal);
             }
-            else{
+            else {
                 valorTotal = valorTotal - valor_acompanhamento;
-                $("#valorTotal").text("R$: "+valorTotal);
+                $("#valorTotal").text("R$: " + valorTotal);
             }
         });
     });

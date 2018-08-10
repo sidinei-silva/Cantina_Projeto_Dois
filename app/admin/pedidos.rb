@@ -11,5 +11,5 @@ ActiveAdmin.register Pedido do
 #   permitted << :other if params[:action] == 'create' && current_user.admin?
 #   permitted
 # end
-
+  menu priority: 4
 end

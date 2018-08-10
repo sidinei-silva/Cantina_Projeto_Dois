@@ -91,16 +91,27 @@ _________________________________________________________ -->
                 <div class="flip-container">
                   <div class="flipper">
                     <div class="front">
-                      <%= link_to image_tag("template/product1.jpg", class: "img-responsive"), catalogo_detalhes_path(produto) %>
+                      <% if produto.image.attached? %>
+                        <%= link_to catalogo_detalhes_path(produto) do %>
+                          <%= image_tag produto.image, class: "img-responsive" %>
+                        <% end %>
+                      <% end %>
                     </div>
                     <div class="back">
-                      <%= link_to image_tag("template/product1_2.jpg", class: "img-responsive"), catalogo_detalhes_path(produto) %>
+                      <% if produto.image.attached? %>
+                        <%= link_to catalogo_detalhes_path(produto) do %>
+                          <%= image_tag produto.image, class: "img-responsive" %>
+                        <% end %>
+                      <% end %>
 
                     </div>
                   </div>
                 </div>
-                <%= link_to image_tag("template/product1.jpg", class: "img-responsive"), catalogo_detalhes_path(produto) %>
-
+                <% if produto.image.attached? %>
+                  <%= link_to catalogo_detalhes_path(produto) do %>
+                    <%= image_tag produto.image, class: "img-responsive" %>
+                  <% end %>
+                <% end %>
                 <div class="text">
                   <h3><%= link_to produto.nome_produto, catalogo_detalhes_path(produto) %></h3>
                   <p class="price">R$: <%= produto.valor_produto %></p>
