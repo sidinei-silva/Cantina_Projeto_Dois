@@ -6,13 +6,18 @@ class CarrinhoController < ApplicationController
       @item = Hash.new
       @item[:produto_id] = params[:item][:produto_id]
       @item[:acompanhamento_id] = params[:item][:acompanhamento_id]
-      carrinho << @item
+      carrinho_insert << @item
     end
+
+    #@acompanhamento = Acompanhamento.find(session[:carrinho][0]["acompanhamento_id"])
   end
+
   private
-  def carrinho
+
+  def carrinho_insert
     session[:carrinho] ||= []
   end
+
 
 
 end
