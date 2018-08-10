@@ -118,7 +118,10 @@ _________________________________________________________ -->
     <div class="navbar-buttons">
 
       <div class="navbar-collapse collapse right" id="basket-overview">
-        <a href="basket.html" class="btn btn-primary navbar-btn"><i class="fa fa-shopping-cart"></i><span class="hidden-sm"><%=session[:carrinho].count if defined? (session[:carrinho].count) %> Itens no carrinho</span></a>
+        <%= link_to carrinho_index_path, class: "btn btn-primary navbar-btn" do %>
+          <i class="fa fa-shopping-cart"></i><span class="hidden-sm"><%=session[:carrinho].count if defined? (session[:carrinho].count) %> Itens no carrinho</span>
+        <%end %>
+
       </div>
       <!--/.nav-collapse -->
 
