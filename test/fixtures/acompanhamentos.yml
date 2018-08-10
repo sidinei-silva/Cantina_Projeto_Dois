@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nome_acompanhamento: MyString
+  valor_acompanhamento: 1.5
+  esta_ativo: false
+  produto: one
+
+two:
+  nome_acompanhamento: MyString
+  valor_acompanhamento: 1.5
+  esta_ativo: false
+  produto: two

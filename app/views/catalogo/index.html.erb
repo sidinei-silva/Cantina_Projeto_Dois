@@ -1,0 +1,125 @@
+<div id="all">
+  <div id="content">
+    <div class="container">
+      <div class="col-md-12">
+        <div id="main-slider">
+          <div class="item">
+            <%= image_tag("template/main-slider.jpg", class: "img-responsive") %>
+            <div class="border-radius:10px; img-responsive" style="transform: translate(-50%, -50%); left: 50%; top: 50%; position: absolute; width: 80%">
+              <div class=" box same-height" style="background: rgba(255,255,255,0.9)">
+                <h3>Noticia 1</h3>
+                <p>We are known to provide best possible service ever</p>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <%= image_tag("template/main-slider.jpg", class: "img-responsive") %>
+            <div class="border-radius:10px; img-responsive" style="transform: translate(-50%, -50%); left: 50%; top: 50%; position: absolute; width: 80%">
+              <div class=" box same-height" style="background: rgba(255,255,255,0.9)">
+                <h3>Noticia 1</h3>
+                <p>We are known to provide best possible service ever</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /#main-slider -->
+      </div>
+    </div>
+
+    <div id="advantages">
+      <div class="container">
+        <div class="same-height-row">
+          <div class="col-sm-4">
+            <div class="box same-height clickable">
+              <div class="icon"><i class="fa fa-exclamation"></i>
+              </div>
+
+              <h3><a href="#">Noticia 2</a></h3>
+              <p>We are known to provide best possible service ever</p>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="box same-height clickable">
+              <div class="icon"><i class="fa fa-exclamation"></i>
+              </div>
+              <h3><a href="#">Noticia 3</a></h3>
+              <p>You can check that the height of the boxes adjust when longer text like this one is used in one of
+                them.</p>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="box same-height clickable">
+              <div class="icon"><i class="fa fa-exclamation"></i>
+              </div>
+
+              <h3><a href="#">Noticia 4</a></h3>
+              <p>Free returns on everything for 3 months.</p>
+            </div>
+          </div>
+        </div>
+        <!-- /.row -->
+
+      </div>
+      <!-- /.container -->
+
+    </div>
+    <!-- /#advantages -->
+
+    <!-- *** ADVANTAGES END *** -->
+    <!-- *** HOT PRODUCT SLIDESHOW ***
+_________________________________________________________ -->
+    <div id="hot">
+      <div class="box">
+        <div class="container">
+          <div class="col-md-12">
+            <h2>Produtos</h2>
+          </div>
+        </div>
+      </div>
+
+      <% if flash[:notice] %>
+        <div class="alert alert-danger text-center"><%= flash[:notice] %></div>
+      <% end %>
+
+      <div class="container">
+        <div class="product-slider">
+          <% @produtos.each do |produto| %>
+
+            <div class="item">
+              <div class="product">
+                <div class="flip-container">
+                  <div class="flipper">
+                    <div class="front">
+                      <%= link_to image_tag("template/product1.jpg", class: "img-responsive"), catalogo_detalhes_path(produto) %>
+                    </div>
+                    <div class="back">
+                      <%= link_to image_tag("template/product1_2.jpg", class: "img-responsive"), catalogo_detalhes_path(produto) %>
+
+                    </div>
+                  </div>
+                </div>
+                <%= link_to image_tag("template/product1.jpg", class: "img-responsive"), catalogo_detalhes_path(produto) %>
+
+                <div class="text">
+                  <h3><%= link_to produto.nome_produto, catalogo_detalhes_path(produto) %></h3>
+                  <p class="price">R$: <%= produto.valor_produto %></p>
+                </div>
+                <!-- /.text -->
+              </div>
+              <!-- /.product -->
+            </div>
+          <% end %>
+        </div>
+        <!-- /.product-slider -->
+      </div>
+      <!-- /.container -->
+
+    </div>
+    <!-- /#hot -->
+
+    <!-- *** HOT END *** -->
+
+  </div>
+  <!-- /#content -->
+</div>

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  status_pedido: MyString
+  total_pedido: 1.5
+  cliente: one
+
+two:
+  status_pedido: MyString
+  total_pedido: 1.5
+  cliente: two

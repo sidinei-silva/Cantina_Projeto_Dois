@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cantina Projeto</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag  'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application',  media: 'all', 'data-turbolinks-track': 'reload'  %>
+</head>
+
+<body>
+<!-- *** TOPBAR ***
+_________________________________________________________ -->
+
+<div id="top">
+  <div class="container">
+    <div class="col-md-6 col-md-push-6" data-animate="fadeInDown">
+      <ul class="menu">
+
+        <li>
+          <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+            <%= link_to "Cadastrar", new_registration_path(resource_name) %><br />
+          <% end -%>
+        </li>
+        <li>
+          <% if cliente_signed_in? %>
+            <%= link_to "Sair", destroy_cliente_session_path, method: :delete, :class => 'navbar-link'  %>
+          <% else %>
+            <a href="#" data-toggle="modal" data-target="#login-modal">Login</a>
+          <% end %>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="Login">Entrar</h4>
+        </div>
+        <div class="modal-body">
+          <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+            <div class="field form-group">
+              <%= f.label :email %><br />
+              <%= f.email_field :email, class:"form-control", autofocus: true, autocomplete: "email" %>
+            </div>
+
+            <div class="field form-group">
+              <%= f.label :password %><br />
+              <%= f.password_field :password, class:"form-control", autocomplete: "off" %>
+            </div>
+
+            <% if devise_mapping.rememberable? -%>
+              <div class="field form-check">
+                <%= f.check_box :remember_me, class:"form-check-input" %>
+                <%= f.label :remember_me, class:"form-check-label" %>
+              </div>
+            <% end -%>
+
+            <div class="actions form-group">
+              <%= f.button :submit, :class=>"btn btn-success" do %>
+                <i class="fa fa-sign-in"> Entrar</i>
+              <% end %>
+            </div>
+          <% end %>
+          <br>
+          <p class="text-center text-muted">Não está cadastrado?</p>
+          <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+            <%= link_to "Sign up", new_registration_path(resource_name) %><br />
+          <% end -%>
+
+          <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+            <%= link_to "Forgot your password?", new_password_path(resource_name) %><br />
+          <% end -%>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- *** TOP BAR END *** -->
+
+<!-- *** NAVBAR ***
+_________________________________________________________ -->
+
+<div class="navbar navbar-default yamm" role="navigation" id="navbar">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand home" href="/" data-animate-hover="bounce" data-turbolinks="false">
+        <%= image_tag("template/logo.png", alt: "Obaju Logo", class: "hidden-xs") %>
+        <%= image_tag("template/logo-small.png", alt: "Obaju Logo", class: "visible-xs") %>
+      </a>
+      <div class="navbar-buttons">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation">
+          <span class="sr-only">Toggle navigation</span>
+          <i class="fa fa-align-justify"></i>
+        </button>
+
+        <a class="btn btn-default navbar-toggle" href="basket.html">
+          <i class="fa fa-shopping-cart"></i>  <span class="hidden-xs">3 items in cart</span>
+        </a>
+      </div>
+    </div>
+    <!--/.navbar-header -->
+
+    <div class="navbar-collapse collapse" id="navigation">
+
+      <ul class="nav navbar-nav navbar-left">
+        <li class="active"> <%= link_to("Home", root_url , :"data-turbolinks" => false) %></li>
+      </ul>
+
+    </div>
+    <!--/.nav-collapse -->
+
+    <div class="navbar-buttons">
+
+      <div class="navbar-collapse collapse right" id="basket-overview">
+        <a href="basket.html" class="btn btn-primary navbar-btn"><i class="fa fa-shopping-cart"></i><span class="hidden-sm"><%= @quantidade_carrinho %> Itens no carrinho</span></a>
+      </div>
+      <!--/.nav-collapse -->
+
+
+
+    </div>
+    <!--/.nav-collapse -->
+
+  </div>
+  <!-- /.container -->
+</div>
+<!-- /#navbar -->
+
+<!-- *** NAVBAR END *** -->
+<!-- *** YIELD *** -->
+
+<%= yield %>
+
+<!-- /#yield -->
+
+<!-- *** FOOTER ***
+_________________________________________________________ -->
+<div id="footer" data-animate="fadeInUp">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 col-sm-6">
+        <h4>Pages</h4>
+
+        <ul>
+          <li><a href="text.html">About us</a>
+          </li>
+          <li><a href="text.html">Terms and conditions</a>
+          </li>
+          <li><a href="faq.html">FAQ</a>
+          </li>
+          <li><a href="contact.html">Contact us</a>
+          </li>
+        </ul>
+
+        <hr>
+
+        <h4>User section</h4>
+
+        <ul>
+          <li><a href="#" data-toggle="modal" data-target="#login-modal">Login</a>
+          </li>
+          <li><a href="register.html">Regiter</a>
+          </li>
+        </ul>
+
+        <hr class="hidden-md hidden-lg hidden-sm">
+
+      </div>
+      <!-- /.col-md-3 -->
+      <div class="col-md-3 col-sm-6"></div>
+
+      <div class="col-md-3 col-sm-6">
+
+        <h4>Where to find us</h4>
+
+        <p><strong>Obaju Ltd.</strong>
+          <br>13/25 New Avenue
+          <br>New Heaven
+          <br>45Y 73J
+          <br>England
+          <br>
+          <strong>Great Britain</strong>
+        </p>
+
+        <a href="contact.html">Go to contact page</a>
+
+        <hr class="hidden-md hidden-lg">
+
+      </div>
+      <!-- /.col-md-3 -->
+
+
+
+      <div class="col-md-3 col-sm-6">
+
+        <h4>Get the news</h4>
+
+        <p class="text-muted">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+
+        <form>
+          <div class="input-group">
+
+            <input type="text" class="form-control">
+
+            <span class="input-group-btn">
+
+            <button class="btn btn-default" type="button">Subscribe!</button>
+
+        </span>
+
+          </div>
+          <!-- /input-group -->
+        </form>
+
+        <hr>
+
+        <h4>Stay in touch</h4>
+
+        <p class="social">
+          <a href="#" class="facebook external" data-animate-hover="shake"><i class="fa fa-facebook"></i></a>
+          <a href="#" class="twitter external" data-animate-hover="shake"><i class="fa fa-twitter"></i></a>
+          <a href="#" class="instagram external" data-animate-hover="shake"><i class="fa fa-instagram"></i></a>
+          <a href="#" class="gplus external" data-animate-hover="shake"><i class="fa fa-google-plus"></i></a>
+          <a href="#" class="email external" data-animate-hover="shake"><i class="fa fa-envelope"></i></a>
+        </p>
+
+
+      </div>
+      <!-- /.col-md-3 -->
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+</div>
+<!-- /#footer -->
+
+<!-- *** FOOTER END *** -->
+
+<!-- *** COPYRIGHT ***
+_________________________________________________________ -->
+<div id="copyright">
+  <div class="container">
+    <div class="col-md-6">
+      <p class="pull-left">© 2015 Your name goes here.</p>
+
+    </div>
+    <div class="col-md-6">
+      <p class="pull-right">Template by <a href="https://bootstrapious.com/e-commerce-templates">Bootstrapious</a> & <a href="https://fity.cz">Fity</a>
+        <!-- Not removing these links is part of the license conditions of the template. Thanks for understanding :) If you want to use the template without the attribution links, you can do so after supporting further themes development at https://bootstrapious.com/donate  -->
+      </p>
+    </div>
+  </div>
+</div>
+<!-- *** COPYRIGHT END *** -->
+
+
+</body>
+</html>

@@ -1,0 +1,102 @@
+<%= form_for :carrinho, url:carrinho_index_path do |form| %>
+  <div id="all">
+    <div id="content">
+      <div class="container">
+        <div class="col-md-10 col-md-push-1">
+          <div class="row" id="productMain">
+            <div class="col-sm-6">
+              <div id="mainImage">
+                <%= image_tag("template/detailbig1.jpg", class: "img-responsive") %>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="box">
+                <div class="container-fluid">
+                  <h2 class="text-center"><b><%= @produto.nome_produto %></b></h2>
+                  <div class="goToDescription"><a href="#details" class="scroll-to">Ver descrição do produto </a></div>
+                  <span class="lead  ">R$ <%= @produto.valor_produto %></span>
+                </div>
+                <hr>
+                <div class="container-fluid">
+                  <p><b>Nome do produto: </b><%= @produto.nome_produto %></p>
+                  <p><b>Disponibilidade : </b><span class="text-success">Disponivel</span></p>
+                </div>
+                <hr>
+                <div class="container-fluid">
+                  <p class="text-large">Acompanhamentos</p><br>
+                  <%= hidden_field_tag  'item[produto_id]', @produto.id %>
+                  <div class="form-group">
+                    <%= collection_check_boxes(:item, :acompanhamento_id, @acompanhamento.all, :id, :nome_acompanhamento) do |b| %>
+                      <div class="form-check">
+                        <%= b.label class: "form-check-label", for: b.object.id do%>
+                          <%= b.check_box class: "form-check-input", id: b.object.id%>
+                          <%=b.text %>
+                          (<b> + </b><span id= valor_acompanhamento><%= b.object.valor_acompanhamento %></span>)
+                        <% end %>
+                      </div>
+                    <% end %>
+                  </div>
+
+                </div>
+                <hr>
+                <div class="text-center">
+                  <h3 class="">Total:</h3>
+                  <h2 id="valorTotal"> R$: </h2>
+                </div>
+                <div class="container-fluid">
+                  <p class=" buttons">
+                  <div class="actions text-center">
+                    <%= form.button :submit, :class=>"btn btn-success" do %>
+                      <i class="fa fa-shopping-cart"></i> Add to cart
+                    <% end %>
+                  </div>
+
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="box" id="details">
+            <p>
+            <h4>Descrição do Produto</h4>
+            <blockquote>
+              <p><em>Define style this season with Armani's new range of trendy tops, crafted with intricate details. Create a chic statement look by teaming this lace number with skinny jeans and pumps.</em>
+              </p>
+            </blockquote>
+            <h4>Acompanhamentos</h4>
+            <ul>
+              <% @acompanhamento.each do |acompanhamento|  %>
+                <li><%= acompanhamento.nome_acompanhamento %></li>
+              <%end %>
+            </ul>
+            <hr>
+          </div>
+        </div>
+        <!-- /.col-md-9 -->
+      </div>
+      <!-- /.container -->
+    </div>
+    <!-- /#content -->
+  </div>
+<% end %>
+<script type="text/javascript" charset="utf-8">
+    $(function () {
+
+        let valorTotal = <%= @produto.valor_produto %>;
+        $("#valorTotal").text("R$: "+valorTotal);
+
+        $('.form-group input[type=checkbox]').click(function () {
+            let valor_acompanhamento = parseFloat($("#valor_acompanhamento").text()) ;
+
+            if ($(this).is(':checked')) {
+
+                valorTotal = valorTotal + valor_acompanhamento;
+                $("#valorTotal").text("R$: "+valorTotal);
+            }
+            else{
+                valorTotal = valorTotal - valor_acompanhamento;
+                $("#valorTotal").text("R$: "+valorTotal);
+            }
+        });
+    });
+</script>

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  valor_acompanhamento: 1.5
+  acompanhamento: one
+  item_pedido: one
+
+two:
+  valor_acompanhamento: 1.5
+  acompanhamento: two
+  item_pedido: two
