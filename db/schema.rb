@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_10_032247) do
+ActiveRecord::Schema.define(version: 2018_08_10_144839) do
 
   create_table "acompanhamentos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "nome_acompanhamento"
@@ -93,14 +93,14 @@ ActiveRecord::Schema.define(version: 2018_08_10_032247) do
     t.index ["reset_password_token"], name: "index_clientes_on_reset_password_token", unique: true
   end
 
-  create_table "item_adicionals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "item_acompanhamentos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.float "valor_acompanhamento"
     t.bigint "acompanhamento_id"
     t.bigint "item_pedido_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["acompanhamento_id"], name: "index_item_adicionals_on_acompanhamento_id"
-    t.index ["item_pedido_id"], name: "index_item_adicionals_on_item_pedido_id"
+    t.index ["acompanhamento_id"], name: "index_item_acompanhamentos_on_acompanhamento_id"
+    t.index ["item_pedido_id"], name: "index_item_acompanhamentos_on_item_pedido_id"
   end
 
   create_table "item_pedidos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -134,8 +134,8 @@ ActiveRecord::Schema.define(version: 2018_08_10_032247) do
   end
 
   add_foreign_key "acompanhamentos", "produtos"
-  add_foreign_key "item_adicionals", "acompanhamentos"
-  add_foreign_key "item_adicionals", "item_pedidos"
+  add_foreign_key "item_acompanhamentos", "acompanhamentos"
+  add_foreign_key "item_acompanhamentos", "item_pedidos"
   add_foreign_key "item_pedidos", "pedidos"
   add_foreign_key "item_pedidos", "produtos"
   add_foreign_key "pedidos", "clientes"
