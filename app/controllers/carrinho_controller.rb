@@ -5,7 +5,7 @@
 #   @produtos
 #     {All values the produtos from session in database}
 #   @acompanhamentos
-#     {All values the produtos from session in database}
+#     {All values the acompanhamento from session in database}
 #
 class CarrinhoController < ApplicationController
   before_action :authenticate_cliente!
@@ -39,34 +39,40 @@ class CarrinhoController < ApplicationController
     end
   end
 
+  #@acompanhamentos_item_info
+  #   {All values the acompanhamento from session in database }
+  #@acompanhamento_info
+  #   {-variable aux-Acompanhamento value separate}
+  #acompanhamentos_all
+  #   {All ids the acompanhemento in session separate in vector for item}
   def capture_acompanhamentos
-    @acompanhamentos = []
-    @acompanhamentos_item = acompanhamentos_item = [] #acom
     @acompanhamentos_item_info = []
-    acompanhamentos_in_session(acompanhamentos_item)
-    acompanhamentos_info(acompanhamentos_item)
+    @acompanhamento_info = []
+    acompanhamentos_all = []
+    acompanhamentos_in_session(acompanhamentos_all)
+    acompanhamentos_info(acompanhamentos_all)
   end
 
-  def acompanhamentos_in_session(acompanhamentos_item)
+  def acompanhamentos_in_session(acompanhamentos_all)
     session[:carrinho].each do |carrinho|
       # :nome (first request) "nome" (refresh)
       if !carrinho[:acompanhamento_id].nil?
-        acompanhamentos_item.push carrinho[:acompanhamento_id]
+        acompanhamentos_all.push carrinho[:acompanhamento_id]
       else
-        acompanhamentos_item.push carrinho['acompanhamento_id']
+        acompanhamentos_all.push carrinho['acompanhamento_id']
       end
     end
   end
 
-  def acompanhamentos_info(acompanhamentos_item)
-    acompanhamentos_item.each do |acompanhamento_item|
-      acompanhamento_item.each do |acomp|
-        unless acomp.blank?
-          @acompanhamentos.push(Acompanhamento.find(acomp))
+  def acompanhamentos_info(acompanhamentos_all)
+    acompanhamentos_all.each do |acompanhamento_item|
+      acompanhamento_item.each do |acompanhamento_id|
+        unless acompanhamento_id.blank?
+          @acompanhamento_info.push(Acompanhamento.find(acompanhamento_id))
         end
       end
-      @acompanhamentos_item_info.push(@acompanhamentos)
-      @acompanhamentos = []
+      @acompanhamentos_item_info.push(@acompanhamento_info)
+      @acompanhamento_info = []
     end
   end
 
