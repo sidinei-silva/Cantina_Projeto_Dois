@@ -1,8 +1,3 @@
-
-<%= @acompanhamentos_all.inspect %> <br>
-<%= @acompanhamentos.inspect %> <br>
-
-
 <div id="all">
   <div id="content">
     <div class="container">
@@ -29,8 +24,7 @@
                 </tr>
                 </thead>
                 <tbody>
-
-                <% @produtos.each do |produto| %>
+                <% @produtos.each_with_index do |produto, count_loop| %>
                   <tr>
                     <td>
                       <% if produto.image.attached? %>
@@ -46,7 +40,13 @@
                       <input type="number" value="2" class="form-control">
                     </td>
                     <td>R$: <%= produto.valor_produto %></td>
-                    <td></td>
+                    <td>
+                      <% @acompanhamentos_item_info[count_loop].each do |acompanhamento| %>
+                        <li>
+                          <%=acompanhamento.nome_acompanhamento %>
+                        </li>
+                      <% end %>
+                    </td>
                     <td></td>
                     <td><a href="#"><i class="fa fa-trash-o"></i></a>
                     </td>
