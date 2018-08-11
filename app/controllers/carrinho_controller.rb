@@ -12,38 +12,45 @@ class CarrinhoController < ApplicationController
     get_acomoanhamentos_session
   end
 
+  private
+
+  def carrinho_insert
+    session[:carrinho] ||= []
+  end
+
   def get_produtos_session
     @produtos = Array.new
-    session[:carrinho].each do |carrinho|
-      begin
-        @produtos.push(Produto.find(carrinho[:produto_id]))
-      rescue ActiveRecord::RecordNotFound
-        @produtos.push(Produto.find(carrinho["produto_id"]))
+    if defined? session[:carrinho]
+      session[:carrinho].each do |carrinho|
+        # :nome (first request) "nome" (refresh)
+        begin
+          @produtos.push(Produto.find(carrinho[:produto_id]))
+        rescue ActiveRecord::RecordNotFound
+          @produtos.push(Produto.find(carrinho["produto_id"]))
+        end
       end
     end
   end
 
   def get_acomoanhamentos_session
     @acompanhamentos_all = Array.new
+    @acompanhamentos = Array.new
     session[:carrinho].each do |carrinho|
-      @acompanhamentos_all.push carrinho["acompanhamento_id"] # :nome (first request) "nome" (refresh)
-    end
-
-    @acompanhamentos_all.each do |acompanhamentos_item|
-      acompanhamentos_item.each do |acompanhamento_item|
-        unless acompanhamento_item.blank?
-          @acompanhamento_item = acompanhamento_item
-          #@acompanhamentos = Acompanhamentos.all
+      # :nome (first request) "nome" (refresh)
+      if carrinho[:acompanhamento_id] != nil
+        @acompanhamentos_all.push carrinho[:acompanhamento_id]
+      else
+        @acompanhamentos_all.push carrinho["acompanhamento_id"]
+      end
+      @acompanhamentos_all.each do |acompanhamentos_item|
+        acompanhamentos_item.each do |acompanhamento_item|
+          unless acompanhamento_item.blank?
+            @acompanhamentos.push(Acompanhamento.find(acompanhamento_item))
+          end
         end
       end
     end
-
   end
 
-  private
-
-
-  def carrinho_insert
-    session[:carrinho] ||= []
-  end
 end
+
