@@ -8,18 +8,17 @@ class CarrinhoController < ApplicationController
       items[:acompanhamento_id] = params[:item][:acompanhamento_id]
       carrinho_insert << items
     end
-    get_produtos_session
-    get_acomoanhamentos_session
+    capture_produtos
+    capture_acompanhamentos
   end
 
   private
-
   def carrinho_insert
     session[:carrinho] ||= []
   end
 
-  def get_produtos_session
-    @produtos = Array.new
+  def capture_produtos
+    @produtos = []
     if defined? session[:carrinho]
       session[:carrinho].each do |carrinho|
         # :nome (first request) "nome" (refresh)
@@ -32,9 +31,15 @@ class CarrinhoController < ApplicationController
     end
   end
 
-  def get_acomoanhamentos_session
-    @acompanhamentos_all = Array.new
-    @acompanhamentos = Array.new
+
+  def capture_acompanhamentos
+    @acompanhamentos_all = []
+    @acompanhamentos = []
+    acompanhamentos_in_session
+    acompanhamentos_info
+  end
+
+  def acompanhamentos_in_session
     session[:carrinho].each do |carrinho|
       # :nome (first request) "nome" (refresh)
       if carrinho[:acompanhamento_id] != nil
@@ -42,11 +47,14 @@ class CarrinhoController < ApplicationController
       else
         @acompanhamentos_all.push carrinho["acompanhamento_id"]
       end
-      @acompanhamentos_all.each do |acompanhamentos_item|
-        acompanhamentos_item.each do |acompanhamento_item|
-          unless acompanhamento_item.blank?
-            @acompanhamentos.push(Acompanhamento.find(acompanhamento_item))
-          end
+    end
+  end
+
+  def acompanhamentos_info
+    @acompanhamentos_all.each do |acompanhamentos_item|
+      acompanhamentos_item.each do |acompanhamento_item|
+        unless acompanhamento_item.blank?
+          @acompanhamentos.push(Acompanhamento.find(acompanhamento_item))
         end
       end
     end
