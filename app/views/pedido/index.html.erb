@@ -1,0 +1,46 @@
+<%= form_with(model: pedido, local: true) do |form| %>
+
+  <%= form.fields_for :pedido do |pedido_form| %>
+    <div class="field form-group">
+      <%= pedido_form.label :status_pedido %><br />
+      <%= pedido_form.text_field :status_pedido, class:"form-control" %>
+    </div>
+
+    <div class="field form-group">
+      <%= pedido_form.label :total_pedido %><br />
+      <%= pedido_form.number_field :total_pedido, in: 1.0..20.0, step: 0.1, class:"form-control" %>
+    </div>
+
+    <div class="field form-group">
+      <%= pedido_form.label :cliente_id %><br />
+      <%= pedido_form.number_field :cliente_id, value: 1 %>
+    </div>
+
+    <%= form.fields_for :item_pedidos do |item_pedido_form| %>
+
+      <div class="field form-group">
+        <%= item_pedido_form.label :quantidade_item_pedido %><br />
+        <%= item_pedido_form.number_field :quantidade_item_pedido%>
+      </div>
+
+      <div class="field form-group">
+        <%= item_pedido_form.label :total_item_pedido %><br />
+        <%= item_pedido_form.number_field :total_item_pedido, in: 1.0..20.0, step: 0.1, class:"form-control" %>
+      </div>
+
+      <div class="field form-group">
+        <%= item_pedido_form.label :produto_id %><br />
+        <%= item_pedido_form.number_field :produto_id, value: 1 %>
+      </div>
+
+      <%= item_pedido_form.fields_for :item_acompanhamentos do |item_acompanhamentos_form| %>
+        <div class="field form-group">
+          <%= item_acompanhamentos_form.label :valor_acompanhamento %><br />
+          <%= item_acompanhamentos_form.number_field :valor_acompanhamento, in: 1.0..20.0, step: 0.1, class:"form-control" %>
+        </div>
+      <% end %>
+
+    <% end %>
+  <% end %>
+  <%= form.submit %>
+<% end %>

@@ -6,6 +6,9 @@ Rails.application.routes.draw do
   get 'carrinho/index'
   post 'carrinho/index'
 
+  resources :pedido
+  resources :item_pedidos
+  resources :item_acompanhamentos
   devise_for :clientes
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
